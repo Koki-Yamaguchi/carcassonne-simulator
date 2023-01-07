@@ -22,7 +22,7 @@ const place = (tileKind: Tile) => {
           :key="tileKind.Name"
           @click="place(tileKind)"
         >
-          <img class="ui avatar image" :src="tileKind.ImgURL" />
+          <img class="ui avatar image" :src="tileKind.Src" />
           {{ tileKind.Name }}
         </div>
       </div>

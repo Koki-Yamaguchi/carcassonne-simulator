@@ -3,7 +3,7 @@ type Side = "field" | "road" | "city";
 export class Tile {
   Name: string;
   Direction: number;
-  ImgURL: string;
+  Src: any;
   Right(): Side {
     return this.Sides[(0 + this.Direction) % 4];
   }
@@ -20,10 +20,10 @@ export class Tile {
     this.Direction = (this.Direction + 1) % 4;
   }
   Sides: Side[];
-  constructor(name: string, direction: number, imgURL: string, sides: Side[]) {
+  constructor(name: string, direction: number, sides: Side[], src: any) {
     this.Name = name;
     this.Direction = direction;
-    this.ImgURL = imgURL;
     this.Sides = sides;
+    this.Src = src;
   }
 }

@@ -14,13 +14,13 @@ defineProps<{
   <div class="box placing" v-if="tile && placing">
     <img
       :style="{ transform: `rotate(${tile.Direction * 90}deg)` }"
-      :src="tile.ImgURL"
+      :src="tile.Src"
     />
   </div>
   <div class="box" v-else-if="tile">
     <img
       :style="{ transform: `rotate(${tile.Direction * 90}deg)` }"
-      :src="tile.ImgURL"
+      :src="tile.Src"
     />
   </div>
   <div

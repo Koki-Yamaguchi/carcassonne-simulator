@@ -1,28 +1,26 @@
 import { Tile } from "../types";
+import CityCapWithStraightImg from "../assets/img/city_cap_with_straight.png";
+import TripleRoadsImg from "../assets/img/triple_roads.png";
+import MonasteryImg from "../assets/img/monastery.png";
 
 const allTileKinds: Tile[] = [
   new Tile(
     "City Cap With Straight",
     0,
-    "src/assets/img/city_cap_with_straight.png",
-    ["road", "city", "road", "field"]
+    ["road", "city", "road", "field"],
+    CityCapWithStraightImg
   ),
-  new Tile("Triple Roads", 0, "src/assets/img/triple_roads.png", [
-    "road",
-    "field",
-    "road",
-    "road",
-  ]),
-  new Tile("Monastery", 0, "src/assets/img/monastery.png", [
-    "field",
-    "field",
-    "field",
-    "field",
-  ]),
+  new Tile(
+    "Triple Roads",
+    0,
+    ["road", "field", "road", "road"],
+    TripleRoadsImg
+  ),
+  new Tile("Monastery", 0, ["field", "field", "field", "field"], MonasteryImg),
 ];
 
 function newTile(tile: Tile): Tile {
-  return new Tile(tile.Name, tile.Direction, tile.ImgURL, tile.Sides);
+  return new Tile(tile.Name, tile.Direction, tile.Sides, tile.Src);
 }
 
 const boardSize = 2 * 5 + 1;
@@ -37,8 +35,8 @@ for (let i = 0; i < boardSize; i++) {
 initialTiles[(boardSize - 1) / 2][(boardSize - 1) / 2] = new Tile(
   "City Cap With Straight",
   0,
-  "src/assets/img/city_cap_with_straight.png",
-  ["road", "city", "road", "field"]
+  ["road", "city", "road", "field"],
+  CityCapWithStraightImg
 );
 
 export { allTileKinds, initialTiles, boardSize, newTile };
