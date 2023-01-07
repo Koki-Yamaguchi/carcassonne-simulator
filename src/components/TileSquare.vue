@@ -1,28 +1,33 @@
 <script setup lang="ts">
-import type { Tile } from "../types"
+import type { Tile } from "../types";
 
-const props = defineProps<{
-  tile: Tile | null,
-  placeable: boolean,
-  placing: boolean,
-  onClickPosition?: (pos: [number, number]) => void,
-  pos?: [number, number],
-}>()
+defineProps<{
+  tile: Tile | null;
+  placeable: boolean;
+  placing: boolean;
+  onClickPosition: (pos: [number, number]) => void;
+  pos?: [number, number];
+}>();
 </script>
 
 <template>
   <div class="box placing" v-if="tile && placing">
-    <img :style="{'transform': `rotate(${tile.Direction * 90}deg)`}" :src="tile.ImgURL" />
+    <img
+      :style="{ transform: `rotate(${tile.Direction * 90}deg)` }"
+      :src="tile.ImgURL"
+    />
   </div>
   <div class="box" v-else-if="tile">
-    <img :style="{'transform': `rotate(${tile.Direction * 90}deg)`}" :src="tile.ImgURL" />
+    <img
+      :style="{ transform: `rotate(${tile.Direction * 90}deg)` }"
+      :src="tile.ImgURL"
+    />
   </div>
   <div
     v-else-if="placeable"
     class="box placeable"
-    @click="onClickPosition(pos)"
-  >
-  </div>
+    @click="onClickPosition(pos ? pos : [-1, -1])"
+  ></div>
   <div class="box" v-else>
     <!-- just some space -->
   </div>

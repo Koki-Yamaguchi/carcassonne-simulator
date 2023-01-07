@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { allTileKinds } from "../assets/tiles"
-import type { Tile } from "../types"
+import { allTileKinds } from "../assets/tiles";
+import type { Tile } from "../types";
 
 const emit = defineEmits<{
-  (e: 'placingTile', tile: Tile): void
-}>()
+  (e: "placingTile", tile: Tile): void;
+}>();
 const place = (tileKind: Tile) => {
-  emit('placingTile', tileKind)
-}
+  emit("placingTile", tileKind);
+};
 </script>
 
 <template>
@@ -22,7 +22,7 @@ const place = (tileKind: Tile) => {
           :key="tileKind.Name"
           @click="place(tileKind)"
         >
-          <img class="ui avatar image" :src="tileKind.ImgURL">
+          <img class="ui avatar image" :src="tileKind.ImgURL" />
           {{ tileKind.Name }}
         </div>
       </div>
