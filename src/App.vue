@@ -3,12 +3,13 @@ import { RouterView } from "vue-router";
 </script>
 
 <template>
-  <!--
-  <RouterLink to="/">Home</RouterLink>
-  <RouterLink to="/about">About</RouterLink>
-  <RouterLink to="/simulator">Simulator</RouterLink>
-  -->
-  <RouterView />
+  <div class="main">
+    <RouterView />
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.main {
+  background-color: #E9F8D7;
+}
+</style>

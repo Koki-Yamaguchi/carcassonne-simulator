@@ -102,26 +102,30 @@ const confirm = () => {
 </script>
 
 <template>
-  <div class="buttons">
-    <PlaceNewTile @placingTile="handleTileSelected" />
-    <ConfirmPlacement :onClickConfirm="confirm" />
-  </div>
-  <div class="board">
-    <TileBoard
-      :placeablePositions="placeablePositions"
-      :tiles="tiles"
-      @selectingPosition="handlePositionSelected"
-      :placingTile="placingTile"
-      :placingPosition="placingPosition"
-      :placeableDirections="placeableDirections"
-      @turnTile="handleTurnTile"
-    />
+  <div class="simulator">
+    <div class="buttons">
+      <PlaceNewTile @placingTile="handleTileSelected" />
+      <ConfirmPlacement :onClickConfirm="confirm" />
+    </div>
+    <div class="board">
+      <TileBoard
+        :placeablePositions="placeablePositions"
+        :tiles="tiles"
+        @selectingPosition="handlePositionSelected"
+        :placingTile="placingTile"
+        :placingPosition="placingPosition"
+        :placeableDirections="placeableDirections"
+        @turnTile="handleTurnTile"
+      />
+    </div>
   </div>
 </template>
 <style scoped>
+.simulator {
+  padding-left: 20px;
+  padding-top: 20px;
+}
 .buttons {
-  margin-left: 10px;
-  margin-top: 10px;
   display: flex;
 }
 </style>
