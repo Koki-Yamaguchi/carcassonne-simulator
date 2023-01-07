@@ -1,11 +1,11 @@
 import { describe, it, expect } from "vitest";
 
 import { mount } from "@vue/test-utils";
-import Board from "../Board.vue";
+import TileBoard from "../TileBoard.vue";
 
-describe("Board", () => {
+describe("TileBoard", () => {
   it("renders properly", () => {
-    const wrapper = mount(Board, { props: {} });
+    const wrapper = mount(TileBoard, { props: {} });
     expect(wrapper.text()).toContain("");
   });
 });

@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import Board from "../components/Board.vue"
+import TileBoard from "../components/TileBoard.vue";
 </script>
 
 <template>
-  <Board
-  />
+  <TileBoard />
 </template>
