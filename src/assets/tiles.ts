@@ -23,7 +23,7 @@ function newTile(tile: Tile): Tile {
   return new Tile(tile.Name, tile.Direction, tile.Sides, tile.Src);
 }
 
-const boardSize = 2 * 5 + 1;
+const boardSize = 2 * 16 + 1;
 const initialTiles: (Tile | null)[][] = [];
 for (let i = 0; i < boardSize; i++) {
   const emptyRow: (Tile | null)[] = [];

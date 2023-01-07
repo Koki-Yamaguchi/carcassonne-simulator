@@ -106,15 +106,17 @@ const confirm = () => {
     <PlaceNewTile @placingTile="handleTileSelected" />
     <ConfirmPlacement :onClickConfirm="confirm" />
   </div>
-  <TileBoard
-    :placeablePositions="placeablePositions"
-    :tiles="tiles"
-    @selectingPosition="handlePositionSelected"
-    :placingTile="placingTile"
-    :placingPosition="placingPosition"
-    :placeableDirections="placeableDirections"
-    @turnTile="handleTurnTile"
-  />
+  <div class="board">
+    <TileBoard
+      :placeablePositions="placeablePositions"
+      :tiles="tiles"
+      @selectingPosition="handlePositionSelected"
+      :placingTile="placingTile"
+      :placingPosition="placingPosition"
+      :placeableDirections="placeableDirections"
+      @turnTile="handleTurnTile"
+    />
+  </div>
 </template>
 <style scoped>
 .buttons {

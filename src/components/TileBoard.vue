@@ -20,6 +20,8 @@ onMounted(() => {
   if (elem.value) {
     const panzoom = Panzoom(elem.value, {
       maxScale: 20,
+      startX: - 60 * 14,
+      startY: - 60 * 14,
     });
     if (elem.value.parentElement) {
       elem.value.parentElement.addEventListener("wheel", panzoom.zoomWithWheel);
@@ -88,10 +90,6 @@ const selectPosition = (pos: [number, number]) => {
 </template>
 
 <style scoped>
-.board {
-  width: 500px;
-  height: 700px;
-}
 .row {
   display: flex;
 }

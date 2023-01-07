@@ -35,8 +35,8 @@ defineProps<{
 
 <style scoped>
 .box {
-  height: 100px;
-  width: 100px;
+  height: 60px;
+  width: 60px;
 }
 img {
   width: 100%;
