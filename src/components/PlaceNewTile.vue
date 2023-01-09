@@ -14,7 +14,6 @@ defineProps<{
   <div>
     <div class="ui button simple dropdown" :class="{ disabled }">
       <i class="plus icon"></i>
-      <span class="text">Place Tile</span>
       <div class="menu">
         <div class="row">
           <img
@@ -29,6 +28,9 @@ defineProps<{
   </div>
 </template>
 <style scoped>
+.ui.button.simple.dropdown .plus {
+  margin-right: 0px;
+}
 .row {
   display: flex;
   width: 180px;
