@@ -16,21 +16,28 @@ defineProps<{
       <i class="plus icon"></i>
       <span class="text">Place Tile</span>
       <div class="menu">
-        <div
-          v-for="tileKind in allTileKinds"
-          class="item"
-          :key="tileKind.Name"
-          @click="$emit('placingTile', tileKind)"
-        >
-          <img class="ui avatar image" :src="tileKind.Src" />
+        <div class="row">
+          <img
+            v-for="tileKind in allTileKinds"
+            :key="tileKind.Name"
+            @click="$emit('placingTile', tileKind)"
+            :src="tileKind.Src"
+          />
         </div>
       </div>
     </div>
   </div>
 </template>
-<style>
-.ui.flowing.popup.top.left.transition.hidden {
-  visibility: visible;
-  display: block;
+<style scoped>
+.row {
+  display: flex;
+  width: 180px;
+  flex-wrap: wrap;
+}
+img {
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  border-radius: 5%;
 }
 </style>

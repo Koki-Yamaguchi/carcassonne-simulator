@@ -60,6 +60,9 @@ const allTileKinds: Tile[] = [
     ["road", "city", "city", "road"],
     TriangleWithRoadWithCOA
   ),
+  new Tile("City Cap", 0, ["field", "city", "field", "field"], CityCap),
+  new Tile("Left", 0, ["field", "city", "road", "road"], Left),
+  new Tile("Right", 0, ["road", "city", "field", "road"], Right),
   new Tile(
     "City Cap With Straight",
     0,
@@ -72,22 +75,19 @@ const allTileKinds: Tile[] = [
     ["road", "city", "road", "road"],
     CityCapWithCrossRoads
   ),
-  new Tile("City Cap", 0, ["field", "city", "field", "field"], CityCap),
-  new Tile("Left", 0, ["field", "city", "road", "road"], Left),
-  new Tile("Right", 0, ["road", "city", "field", "road"], Right),
   new Tile("Separator", 0, ["field", "field", "city", "city"], Separator),
+  new Tile(
+    "Vertical Separator",
+    0,
+    ["field", "city", "field", "city"],
+    VerticalSeparator
+  ),
   new Tile("Connector", 0, ["city", "field", "city", "field"], Connector),
   new Tile(
     "ConnectorWithCOA",
     0,
     ["city", "field", "city", "field"],
     ConnectorWithCOA
-  ),
-  new Tile(
-    "Vertical Separator",
-    0,
-    ["field", "city", "field", "city"],
-    VerticalSeparator
   ),
   new Tile("Triple City", 0, ["city", "city", "city", "field"], TripleCity),
   new Tile(

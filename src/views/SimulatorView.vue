@@ -124,7 +124,7 @@ const reset = () => {
       />
       <NormalButton
         :onClick="confirm"
-        :disabled="placingTile === null"
+        :disabled="placingTile === null || placeableDirections.length === 0"
         :text="'Confirm'"
       />
       <NormalButton :onClick="reset" :disabled="false" :text="'Reset'" />
