@@ -75,7 +75,7 @@ const allTileKinds: Tile[] = [
     ["road", "city", "road", "road"],
     CityCapWithCrossRoads
   ),
-  new Tile("Separator", 0, ["field", "field", "city", "city"], Separator),
+  new Tile("Separator", 0, ["field", "city", "city", "field"], Separator),
   new Tile(
     "Vertical Separator",
     0,
