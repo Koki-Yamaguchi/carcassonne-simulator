@@ -19,6 +19,9 @@ export class Tile {
   Rotate() {
     this.Direction = (this.Direction + 1) % 4;
   }
+  ResetDirection() {
+    this.Direction = 0;
+  }
   Sides: Side[];
   constructor(name: string, direction: number, sides: Side[], src: any) {
     this.Name = name;

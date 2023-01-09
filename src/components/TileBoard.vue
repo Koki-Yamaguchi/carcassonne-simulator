@@ -11,7 +11,7 @@ defineProps<{
   placingTile: Tile | null;
   placingPosition?: [number, number];
 }>();
-const emit = defineEmits<{
+defineEmits<{
   (e: "selectingPosition", pos: [number, number]): void;
   (e: "turnTile"): void;
 }>();
@@ -20,17 +20,14 @@ onMounted(() => {
   if (elem.value) {
     const panzoom = Panzoom(elem.value, {
       maxScale: 20,
-      startX: - 60 * 14,
-      startY: - 60 * 14,
+      startX: -60 * 14,
+      startY: -60 * 14,
     });
     if (elem.value.parentElement) {
       elem.value.parentElement.addEventListener("wheel", panzoom.zoomWithWheel);
     }
   }
 });
-const selectPosition = (pos: [number, number]) => {
-  emit("selectingPosition", pos);
-};
 </script>
 
 <template>
@@ -48,21 +45,6 @@ const selectPosition = (pos: [number, number]) => {
         </div>
         <div
           v-else-if="
-            placeablePositions.filter((pos) => {
-              return pos[0] === y && pos[1] === x;
-            }).length > 0
-          "
-        >
-          <TileSquare
-            :onClickPosition="selectPosition"
-            :pos="[y, x]"
-            :tile="null"
-            :placeable="true"
-            :placing="false"
-          />
-        </div>
-        <div
-          v-else-if="
             placingPosition &&
             placingPosition[0] === y &&
             placingPosition[1] === x
@@ -74,6 +56,20 @@ const selectPosition = (pos: [number, number]) => {
             :tile="placingTile"
             :placeable="false"
             :placing="true"
+          />
+        </div>
+        <div
+          v-else-if="
+            placeablePositions.filter((pos) => {
+              return pos[0] === y && pos[1] === x;
+            }).length > 0
+          "
+        >
+          <TileSquare
+            @click="$emit('selectingPosition', [y, x])"
+            :tile="null"
+            :placeable="true"
+            :placing="false"
           />
         </div>
         <div v-else>

@@ -5,8 +5,6 @@ defineProps<{
   tile: Tile | null;
   placeable: boolean;
   placing: boolean;
-  onClickPosition: (pos: [number, number]) => void;
-  pos?: [number, number];
 }>();
 </script>
 
@@ -23,11 +21,7 @@ defineProps<{
       :src="tile.Src"
     />
   </div>
-  <div
-    v-else-if="placeable"
-    class="box placeable"
-    @click="onClickPosition(pos ? pos : [-1, -1])"
-  ></div>
+  <div v-else-if="placeable" class="box placeable"></div>
   <div class="box" v-else>
     <!-- just some space -->
   </div>

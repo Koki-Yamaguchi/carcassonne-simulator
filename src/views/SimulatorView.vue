@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import TileBoard from "../components/TileBoard.vue";
 import PlaceNewTile from "../components/PlaceNewTile.vue";
-import ConfirmPlacement from "../components/ConfirmPlacement.vue";
+import NormalButton from "../components/NormalButton.vue";
 import { ref } from "vue";
 import type { Tile } from "../types";
 import { initialTiles, newTile, boardSize } from "../assets/tiles";
@@ -45,6 +45,8 @@ const handleTileSelected = (tileKind: Tile) => {
   }
 };
 const handlePositionSelected = (pos: [number, number]) => {
+  placeableDirections.value = [];
+  placingTile.value?.ResetDirection();
   const y = pos[0];
   const x = pos[1];
   const dirs = [];
@@ -78,8 +80,6 @@ const handlePositionSelected = (pos: [number, number]) => {
   ) {
     placingTile.value?.Rotate();
   }
-
-  placeablePositions.value = [];
 };
 const handleTurnTile = () => {
   placingTile.value?.Rotate();
@@ -104,8 +104,15 @@ const confirm = () => {
 <template>
   <div class="simulator">
     <div class="buttons">
-      <PlaceNewTile @placingTile="handleTileSelected" />
-      <ConfirmPlacement :onClickConfirm="confirm" />
+      <PlaceNewTile
+        @placingTile="handleTileSelected"
+        :disabled="placingTile !== null"
+      />
+      <NormalButton
+        :onClick="confirm"
+        :disabled="placingTile === null"
+        :text="'Confirm'"
+      />
     </div>
     <div class="board">
       <TileBoard
