@@ -141,13 +141,38 @@ const reset = () => {
       />
     </div>
   </div>
+  <div class="footer">
+    <div class="ui vertical footer segment">
+      <div class="ui center aligned container">
+        <div class="ui section divider"></div>
+        <div class="ui horizontal small divided link list">
+          <a class="item"> © 2023 Koki Yamaguchi </a>
+          <a
+            class="item"
+            href="https://github.com/Koki-Yamaguchi/carcassonne-simulator"
+            target="_blank"
+          >
+            Contribute
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <style scoped>
 .simulator {
   padding-left: 20px;
+  padding-right: 20px;
   padding-top: 20px;
+  padding-bottom: 20px;
 }
 .buttons {
   display: flex;
+  padding-bottom: 10px;
+}
+.board {
+  height: 1000px;
+  background-color: #feeeec;
+  border-radius: 0.5%;
 }
 </style>
