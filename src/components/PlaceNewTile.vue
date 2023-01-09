@@ -23,9 +23,14 @@ defineProps<{
           @click="$emit('placingTile', tileKind)"
         >
           <img class="ui avatar image" :src="tileKind.Src" />
-          {{ tileKind.Name }}
         </div>
       </div>
     </div>
   </div>
 </template>
+<style>
+.ui.flowing.popup.top.left.transition.hidden {
+  visibility: visible;
+  display: block;
+}
+</style>
