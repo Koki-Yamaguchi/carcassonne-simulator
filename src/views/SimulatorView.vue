@@ -103,6 +103,12 @@ const confirm = () => {
   placeableDirections.value = [];
   placingPosition.value = [-1, -1];
 };
+const cancel = () => {
+  placingTile.value = null;
+  placeablePositions.value = [];
+  placeableDirections.value = [];
+  placingPosition.value = [-1, -1];
+};
 const reset = () => {
   if (!window.confirm("Do you reset the entire board?")) {
     return;
@@ -127,7 +133,17 @@ const reset = () => {
         :disabled="placingTile === null || placeableDirections.length === 0"
         :text="'Confirm'"
       />
-      <NormalButton :onClick="reset" :disabled="false" :text="'Reset'" />
+      <NormalButton
+        :onClick="cancel"
+        :disabled="placingTile === null"
+        :text="'Cancel'"
+      />
+      <NormalButton
+        :onClick="reset"
+        :disabled="false"
+        :style="{ color: '#DC143C' }"
+        :text="'Reset'"
+      />
     </div>
     <div class="board">
       <TileBoard
