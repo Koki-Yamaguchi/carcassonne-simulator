@@ -4,9 +4,9 @@ import PlaceNewTile from "../components/PlaceNewTile.vue";
 import NormalButton from "../components/NormalButton.vue";
 import { ref } from "vue";
 import type { Tile } from "../types";
-import { initialTiles, newTile, boardSize } from "../assets/tiles";
+import { initialBoard, newTile, boardSize, resetBoard } from "../assets/tiles";
 
-const tiles = ref<(Tile | null)[][]>(initialTiles);
+const tiles = ref<(Tile | null)[][]>(initialBoard);
 const placingTile = ref<Tile | null>(null);
 const placeablePositions = ref<[number, number][]>([]);
 const placeableDirections = ref<number[]>([]);
@@ -42,6 +42,10 @@ const handleTileSelected = (tileKind: Tile) => {
         }
       }
     }
+  }
+  if (placeablePositions.value.length === 0) {
+    placingTile.value = null;
+    alert("There is no square that the selected tile fits.");
   }
 };
 const handlePositionSelected = (pos: [number, number]) => {
@@ -99,6 +103,16 @@ const confirm = () => {
   placeableDirections.value = [];
   placingPosition.value = [-1, -1];
 };
+const reset = () => {
+  if (!window.confirm("Do you reset the entire board?")) {
+    return;
+  }
+  resetBoard(tiles.value);
+  placingTile.value = null;
+  placeablePositions.value = [];
+  placeableDirections.value = [];
+  placingPosition.value = [-1, -1];
+};
 </script>
 
 <template>
@@ -113,6 +127,7 @@ const confirm = () => {
         :disabled="placingTile === null"
         :text="'Confirm'"
       />
+      <NormalButton :onClick="reset" :disabled="false" :text="'Reset'" />
     </div>
     <div class="board">
       <TileBoard

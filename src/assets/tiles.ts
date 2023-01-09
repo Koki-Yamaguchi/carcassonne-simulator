@@ -24,19 +24,29 @@ function newTile(tile: Tile): Tile {
 }
 
 const boardSize = 2 * 16 + 1;
-const initialTiles: (Tile | null)[][] = [];
+const initialBoard: (Tile | null)[][] = [];
 for (let i = 0; i < boardSize; i++) {
   const emptyRow: (Tile | null)[] = [];
-  for (let i = 0; i < boardSize; i++) {
+  for (let j = 0; j < boardSize; j++) {
     emptyRow.push(null);
   }
-  initialTiles.push(emptyRow);
+  initialBoard.push(emptyRow);
 }
-initialTiles[(boardSize - 1) / 2][(boardSize - 1) / 2] = new Tile(
+initialBoard[(boardSize - 1) / 2][(boardSize - 1) / 2] = new Tile(
   "City Cap With Straight",
   0,
   ["road", "city", "road", "field"],
   CityCapWithStraightImg
 );
 
-export { allTileKinds, initialTiles, boardSize, newTile };
+function resetBoard(board: (Tile | null)[][]) {
+  for (let y = 0; y < boardSize; y++) {
+    for (let x = 0; x < boardSize; x++) {
+      if (y !== (boardSize - 1) / 2 || x !== (boardSize - 1) / 2) {
+        board[y][x] = null;
+      }
+    }
+  }
+}
+
+export { allTileKinds, initialBoard, boardSize, newTile, resetBoard };
