@@ -11,6 +11,8 @@ const placingTile = ref<Tile | null>(null);
 const placeablePositions = ref<[number, number][]>([]);
 const placeableDirections = ref<number[]>([]);
 const placingPosition = ref<[number, number]>([-1, -1]);
+const focusingPosition = ref<[number, number]>([-1, -1]);
+
 const handleTileSelected = (tileKind: Tile) => {
   placingTile.value = newTile(tileKind);
   for (let y = 1; y < boardSize - 1; y++) {
@@ -119,6 +121,9 @@ const reset = () => {
   placeableDirections.value = [];
   placingPosition.value = [-1, -1];
 };
+const handleEditTile = (pos: [number, number]) => {
+  focusingPosition.value = pos;
+};
 </script>
 
 <template>
@@ -154,6 +159,8 @@ const reset = () => {
         :placingPosition="placingPosition"
         :placeableDirections="placeableDirections"
         @turnTile="handleTurnTile"
+        @editTile="handleEditTile"
+        :focusingPosition="focusingPosition"
       />
     </div>
   </div>
@@ -175,6 +182,7 @@ const reset = () => {
     </div>
   </div>
 </template>
+
 <style scoped>
 .simulator {
   padding-left: 20px;

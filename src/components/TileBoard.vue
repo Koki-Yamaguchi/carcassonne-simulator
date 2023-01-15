@@ -10,10 +10,12 @@ defineProps<{
   tiles: (Tile | null)[][];
   placingTile: Tile | null;
   placingPosition?: [number, number];
+  focusingPosition: [number, number];
 }>();
 defineEmits<{
   (e: "selectingPosition", pos: [number, number]): void;
   (e: "turnTile"): void;
+  (e: "editTile", pos: [number, number]): void;
 }>();
 const elem = ref<HTMLElement>();
 onMounted(() => {
@@ -37,10 +39,19 @@ onMounted(() => {
       <div v-for="x in boardSize - 1" :key="x">
         <div v-if="tiles[y][x]">
           <TileSquare
-            :onClickPosition="() => {}"
+            v-if="focusingPosition[0] === y && focusingPosition[1] === x"
             :tile="tiles[y][x]"
             :placeable="false"
             :placing="false"
+            :focusing="true"
+          />
+          <TileSquare
+            v-else
+            @click="$emit('editTile', [y, x])"
+            :tile="tiles[y][x]"
+            :placeable="false"
+            :placing="false"
+            :focusing="false"
           />
         </div>
         <div
@@ -51,11 +62,11 @@ onMounted(() => {
           "
         >
           <TileSquare
-            :onClickPosition="() => {}"
             @click="$emit('turnTile')"
             :tile="placingTile"
             :placeable="false"
             :placing="true"
+            :focusing="false"
           />
         </div>
         <div
@@ -70,14 +81,15 @@ onMounted(() => {
             :tile="null"
             :placeable="true"
             :placing="false"
+            :focusing="false"
           />
         </div>
         <div v-else>
           <TileSquare
-            :onClickPosition="() => {}"
             :tile="null"
             :placeable="false"
             :placing="false"
+            :focusing="false"
           />
         </div>
       </div>

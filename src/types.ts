@@ -1,9 +1,17 @@
 type Side = "field" | "road" | "city";
 
+type Position = {
+  y: number;
+  x: number;
+  isField: boolean;
+};
+
 export class Tile {
   Name: string;
   Direction: number;
   Src: any;
+  // position (y (px), x (px)), given that the center of the tile is (0, 0)
+  DefaultMeepleablePositions: Position[] = [];
   Right(): Side {
     return this.Sides[(0 + this.Direction) % 4];
   }
@@ -22,11 +30,30 @@ export class Tile {
   ResetDirection() {
     this.Direction = 0;
   }
+  MeepleablePositions(): Position[] {
+    return this.DefaultMeepleablePositions.map((pos) => {
+      const y = pos.y;
+      const x = pos.x;
+      const theta = -Math.PI * 0.5 * this.Direction;
+      const toY = x * Math.sin(theta) + y * Math.cos(theta);
+      const toX = x * Math.cos(theta) - y * Math.sin(theta);
+      return { y: toY, x: toX, isField: pos.isField };
+    });
+  }
   Sides: Side[];
-  constructor(name: string, direction: number, sides: Side[], src: any) {
+  constructor(
+    name: string,
+    direction: number,
+    sides: Side[],
+    src: any,
+    defaultMeepleablePositions?: Position[]
+  ) {
     this.Name = name;
     this.Direction = direction;
     this.Sides = sides;
     this.Src = src;
+    if (defaultMeepleablePositions) {
+      this.DefaultMeepleablePositions = defaultMeepleablePositions;
+    }
   }
 }
