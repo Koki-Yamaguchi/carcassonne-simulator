@@ -316,6 +316,11 @@ function resetBoard(board: (Tile | null)[][]) {
       }
     }
   }
+  initialBoard[(boardSize - 1) / 2][(boardSize - 1) / 2] = newTile(
+    allTileKinds.filter(
+      (tileKind) => tileKind.Name === "City Cap With Straight"
+    )[0]
+  );
 }
 
 export { allTileKinds, initialBoard, boardSize, newTile, resetBoard };

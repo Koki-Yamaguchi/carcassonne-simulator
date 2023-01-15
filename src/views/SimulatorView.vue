@@ -16,6 +16,7 @@ const focusingPosition = ref<[number, number]>([-1, -1]);
 const currentColor = ref<Color>("red");
 
 const handleTileSelected = (tileKind: Tile) => {
+  defocus();
   placingTile.value = newTile(tileKind);
   for (let y = 1; y < boardSize - 1; y++) {
     for (let x = 1; x < boardSize - 1; x++) {
@@ -142,26 +143,31 @@ const defocus = () => {
 
 <template>
   <div class="simulator">
-    <div class="buttons">
+    <div class="items">
       <PlaceNewTile
+        class="item"
         @placingTile="handleTileSelected"
         :disabled="placingTile !== null"
       />
       <ChangeColor
+        class="item"
         @changeColor="handleChangeColor"
         :currentColor="currentColor"
       />
       <NormalButton
+        class="item"
         :onClick="confirm"
         :disabled="placingTile === null || placeableDirections.length === 0"
         :text="'Confirm'"
       />
       <NormalButton
+        class="item"
         :onClick="cancel"
         :disabled="placingTile === null"
         :text="'Cancel'"
       />
       <NormalButton
+        class="item"
         :onClick="reset"
         :disabled="false"
         :style="{ color: '#DC143C' }"
@@ -211,9 +217,13 @@ const defocus = () => {
   padding-top: 20px;
   padding-bottom: 20px;
 }
-.buttons {
+.items {
   display: flex;
+  flex-wrap: wrap;
   padding-bottom: 10px;
+}
+.item {
+  margin-bottom: 3px;
 }
 .board {
   height: 1000px;
