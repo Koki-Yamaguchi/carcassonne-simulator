@@ -18,6 +18,7 @@ defineEmits<{
   (e: "editTile", pos: [number, number]): void;
   (e: "placeMeeple", meeplePosIdx: number, pos: [number, number]): void;
   (e: "removeMeeple", pos: [number, number]): void;
+  (e: "defocus"): void;
 }>();
 const elem = ref<HTMLElement>();
 onMounted(() => {
@@ -94,6 +95,7 @@ onMounted(() => {
             :placeable="false"
             :placing="false"
             :focusing="false"
+            @defocus="$emit('defocus')"
           />
         </div>
       </div>

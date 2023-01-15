@@ -15,6 +15,7 @@ defineProps<{
 defineEmits<{
   (e: "placeMeeple", idx: number): void;
   (e: "removeMeeple"): void;
+  (e: "defocus"): void;
 }>();
 
 const boxStyle = {
@@ -87,7 +88,7 @@ const boxStyle = {
     </div>
   </div>
   <div v-else-if="placeable" class="box placeable" :style="boxStyle"></div>
-  <div class="box" :style="boxStyle" v-else>
+  <div v-else class="box" :style="boxStyle" @click="$emit('defocus')">
     <!-- just some space -->
   </div>
 </template>

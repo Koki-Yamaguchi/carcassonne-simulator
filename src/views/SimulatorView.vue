@@ -135,6 +135,9 @@ const removeMeeple = (pos: [number, number]) => {
 const handleChangeColor = (color: Color) => {
   currentColor.value = color;
 };
+const defocus = () => {
+  focusingPosition.value = [-1, -1];
+};
 </script>
 
 <template>
@@ -178,6 +181,7 @@ const handleChangeColor = (color: Color) => {
         :focusingPosition="focusingPosition"
         @placeMeeple="placeMeeple"
         @removeMeeple="removeMeeple"
+        @defocus="defocus"
       />
     </div>
   </div>

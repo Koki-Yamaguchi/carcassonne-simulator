@@ -282,14 +282,14 @@ const allTileKinds: Tile[] = [
   ),
 ];
 
-function newTile(tile: Tile): Tile {
+function newTile(tileKind: Tile): Tile {
   return new Tile(
-    tile.Name,
-    tile.Direction,
-    tile.Sides,
-    tile.Src,
-    tile.MeepleColor,
-    tile.DefaultMeepleablePositions
+    tileKind.Name,
+    tileKind.Direction,
+    tileKind.Sides,
+    tileKind.Src,
+    tileKind.MeepleColor,
+    tileKind.DefaultMeepleablePositions
   );
 }
 
@@ -302,12 +302,10 @@ for (let i = 0; i < boardSize; i++) {
   }
   initialBoard.push(emptyRow);
 }
-initialBoard[(boardSize - 1) / 2][(boardSize - 1) / 2] = new Tile(
-  "City Cap With Straight",
-  0,
-  ["road", "city", "road", "field"],
-  CityCapWithStraight,
-  null
+initialBoard[(boardSize - 1) / 2][(boardSize - 1) / 2] = newTile(
+  allTileKinds.filter(
+    (tileKind) => tileKind.Name === "City Cap With Straight"
+  )[0]
 );
 
 function resetBoard(board: (Tile | null)[][]) {
