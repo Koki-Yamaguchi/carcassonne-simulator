@@ -1,6 +1,6 @@
 type Side = "field" | "road" | "city";
 
-export type Color = "red" | "yellow" | null;
+export type Color = "red" | "yellow" | "green" | "black" | "blue" | null;
 
 export type Position = {
   idx: number;

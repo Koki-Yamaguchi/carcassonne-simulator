@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Tile } from "../types";
-import { meepleSrc } from "@/assets/meeples";
+import { lyingMeepleSrc, standingMeepleSrc } from "@/assets/meeples";
 
 const tileSize = 60; // px
 const spotRadius = 2; // px
@@ -50,7 +50,11 @@ const boxStyle = {
           left: `${tileSize / 2 + (pos.x * tileSize) / 2 - 10}px`,
           top: `${tileSize / 2 - (pos.y * tileSize) / 2 - 10}px`,
         }"
-        :src="meepleSrc(tile.MeepleColor)"
+        :src="
+          pos.isField
+            ? lyingMeepleSrc(tile.MeepleColor)
+            : standingMeepleSrc(tile.MeepleColor)
+        "
       />
       <div
         class="empty"
@@ -83,7 +87,11 @@ const boxStyle = {
           left: `${tileSize / 2 + (pos.x * tileSize) / 2 - 10}px`,
           top: `${tileSize / 2 - (pos.y * tileSize) / 2 - 10}px`,
         }"
-        :src="meepleSrc(tile.MeepleColor)"
+        :src="
+          pos.isField
+            ? lyingMeepleSrc(tile.MeepleColor)
+            : standingMeepleSrc(tile.MeepleColor)
+        "
       />
     </div>
   </div>
