@@ -3,7 +3,7 @@ import TileBoard from "../components/TileBoard.vue";
 import PlaceNewTile from "../components/PlaceNewTile.vue";
 import NormalButton from "../components/NormalButton.vue";
 import { ref } from "vue";
-import type { Tile } from "../types";
+import type { Color, Tile } from "../types";
 import { initialBoard, newTile, boardSize, resetBoard } from "../assets/tiles";
 
 const tiles = ref<(Tile | null)[][]>(initialBoard);
@@ -124,6 +124,16 @@ const reset = () => {
 const handleEditTile = (pos: [number, number]) => {
   focusingPosition.value = pos;
 };
+const placeMeeple = (
+  meeplePosIdx: number,
+  pos: [number, number],
+  color: Color
+) => {
+  tiles.value[pos[0]][pos[1]]?.PlaceMeeple(meeplePosIdx, color);
+};
+const removeMeeple = (pos: [number, number]) => {
+  tiles.value[pos[0]][pos[1]]?.RemoveMeeple();
+};
 </script>
 
 <template>
@@ -161,6 +171,8 @@ const handleEditTile = (pos: [number, number]) => {
         @turnTile="handleTurnTile"
         @editTile="handleEditTile"
         :focusingPosition="focusingPosition"
+        @placeMeeple="placeMeeple"
+        @removeMeeple="removeMeeple"
       />
     </div>
   </div>

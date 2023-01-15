@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import Panzoom from "@panzoom/panzoom";
-import type { Tile } from "../types";
+import type { Tile, Color } from "../types";
 import { boardSize } from "@/assets/tiles";
 import TileSquare from "@/components/TileSquare.vue";
 
@@ -16,6 +16,13 @@ defineEmits<{
   (e: "selectingPosition", pos: [number, number]): void;
   (e: "turnTile"): void;
   (e: "editTile", pos: [number, number]): void;
+  (
+    e: "placeMeeple",
+    meeplePosIdx: number,
+    pos: [number, number],
+    color: Color
+  ): void;
+  (e: "removeMeeple", pos: [number, number]): void;
 }>();
 const elem = ref<HTMLElement>();
 onMounted(() => {
@@ -44,6 +51,8 @@ onMounted(() => {
             :placeable="false"
             :placing="false"
             :focusing="true"
+            @placeMeeple="(idx: number, color: Color) => $emit('placeMeeple', idx, [y, x], color)"
+            @removeMeeple="() => $emit('removeMeeple', [y, x])"
           />
           <TileSquare
             v-else
