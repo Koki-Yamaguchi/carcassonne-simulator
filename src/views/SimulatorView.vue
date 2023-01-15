@@ -2,6 +2,7 @@
 import TileBoard from "../components/TileBoard.vue";
 import PlaceNewTile from "../components/PlaceNewTile.vue";
 import NormalButton from "../components/NormalButton.vue";
+import ChangeColor from "../components/ChangeColor.vue";
 import { ref } from "vue";
 import type { Color, Tile } from "../types";
 import { initialBoard, newTile, boardSize, resetBoard } from "../assets/tiles";
@@ -12,6 +13,7 @@ const placeablePositions = ref<[number, number][]>([]);
 const placeableDirections = ref<number[]>([]);
 const placingPosition = ref<[number, number]>([-1, -1]);
 const focusingPosition = ref<[number, number]>([-1, -1]);
+const currentColor = ref<Color>("red");
 
 const handleTileSelected = (tileKind: Tile) => {
   placingTile.value = newTile(tileKind);
@@ -124,15 +126,14 @@ const reset = () => {
 const handleEditTile = (pos: [number, number]) => {
   focusingPosition.value = pos;
 };
-const placeMeeple = (
-  meeplePosIdx: number,
-  pos: [number, number],
-  color: Color
-) => {
-  tiles.value[pos[0]][pos[1]]?.PlaceMeeple(meeplePosIdx, color);
+const placeMeeple = (meeplePosIdx: number, pos: [number, number]) => {
+  tiles.value[pos[0]][pos[1]]?.PlaceMeeple(meeplePosIdx, currentColor.value);
 };
 const removeMeeple = (pos: [number, number]) => {
   tiles.value[pos[0]][pos[1]]?.RemoveMeeple();
+};
+const handleChangeColor = (color: Color) => {
+  currentColor.value = color;
 };
 </script>
 
@@ -142,6 +143,10 @@ const removeMeeple = (pos: [number, number]) => {
       <PlaceNewTile
         @placingTile="handleTileSelected"
         :disabled="placingTile !== null"
+      />
+      <ChangeColor
+        @changeColor="handleChangeColor"
+        :currentColor="currentColor"
       />
       <NormalButton
         :onClick="confirm"

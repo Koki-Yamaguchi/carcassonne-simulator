@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import type { Tile, Color } from "../types";
-import RedStanding from "../assets/img/red_standing.png";
-import YellowStanding from "../assets/img/yellow_standing.png";
+import type { Tile } from "../types";
+import { meepleSrc } from "@/assets/meeples";
 
 const tileSize = 60; // px
 const spotRadius = 2; // px
@@ -14,21 +13,13 @@ defineProps<{
   focusing: boolean;
 }>();
 defineEmits<{
-  (e: "placeMeeple", idx: number, color: Color): void;
+  (e: "placeMeeple", idx: number): void;
   (e: "removeMeeple"): void;
 }>();
 
 const boxStyle = {
   height: `${tileSize}px`,
   width: `${tileSize}px`,
-};
-const meepleSrc = (color: Color) => {
-  if (color === "red") {
-    return RedStanding;
-  }
-  if (color === "yellow") {
-    return YellowStanding;
-  }
 };
 </script>
 
@@ -63,7 +54,7 @@ const meepleSrc = (color: Color) => {
       <div
         class="empty"
         v-else
-        @click="$emit('placeMeeple', pos.idx, 'yellow')"
+        @click="$emit('placeMeeple', pos.idx)"
         :style="{
           position: 'absolute',
           left: `${tileSize / 2 + (pos.x * tileSize) / 2 - spotRadius}px`,
