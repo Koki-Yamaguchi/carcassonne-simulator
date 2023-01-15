@@ -80,7 +80,7 @@ const allTileKinds: Tile[] = [
     QuadrupleRoad,
     null,
     [
-      { idx: 1, y: 0.7, x: 0.1, isField: true },
+      { idx: 1, y: 0.7, x: 0.1, isField: false },
       { idx: 2, y: -0.1, x: 0.7, isField: false },
       { idx: 3, y: 0, x: -0.7, isField: false },
       { idx: 4, y: -0.7, x: 0, isField: false },
