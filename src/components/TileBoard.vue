@@ -18,6 +18,7 @@ defineEmits<{
   (e: "editTile", pos: [number, number]): void;
   (e: "placeMeeple", meeplePosIdx: number, pos: [number, number]): void;
   (e: "removeMeeple", pos: [number, number]): void;
+  (e: "removeTile", pos: [number, number]): void;
   (e: "defocus"): void;
 }>();
 const elem = ref<HTMLElement>();
@@ -49,6 +50,7 @@ onMounted(() => {
             :focusing="true"
             @placeMeeple="(idx: number) => $emit('placeMeeple', idx, [y, x])"
             @removeMeeple="() => $emit('removeMeeple', [y, x])"
+            @removeTile="() => $emit('removeTile', [y, x])"
           />
           <TileSquare
             v-else
