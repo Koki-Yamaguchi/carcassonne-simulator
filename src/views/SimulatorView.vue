@@ -133,6 +133,9 @@ const placeMeeple = (meeplePosIdx: number, pos: [number, number]) => {
 const removeMeeple = (pos: [number, number]) => {
   tiles.value[pos[0]][pos[1]]?.RemoveMeeple();
 };
+const removeTile = (pos: [number, number]) => {
+  tiles.value[pos[0]][pos[1]] = null;
+};
 const handleChangeColor = (color: Color) => {
   currentColor.value = color;
 };
@@ -153,6 +156,7 @@ const defocus = () => {
         class="item"
         @changeColor="handleChangeColor"
         :currentColor="currentColor"
+        :disabled="placingTile !== null"
       />
       <NormalButton
         class="item"
@@ -187,6 +191,7 @@ const defocus = () => {
         :focusingPosition="focusingPosition"
         @placeMeeple="placeMeeple"
         @removeMeeple="removeMeeple"
+        @removeTile="removeTile"
         @defocus="defocus"
       />
     </div>

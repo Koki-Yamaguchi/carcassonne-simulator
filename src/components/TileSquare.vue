@@ -15,6 +15,7 @@ defineProps<{
 defineEmits<{
   (e: "placeMeeple", idx: number): void;
   (e: "removeMeeple"): void;
+  (e: "removeTile"): void;
   (e: "defocus"): void;
 }>();
 
@@ -36,6 +37,7 @@ const boxStyle = {
       :style="{ transform: `rotate(${tile.Direction * 90}deg)` }"
       :src="tile.Src"
     />
+    <i class="times mini icon remove-tile" @click="$emit('removeTile')"> </i>
     <div
       class="meeple-spots"
       v-for="pos in tile.MeepleablePositions()"
@@ -128,5 +130,11 @@ img {
 }
 img.meeple {
   width: 15px;
+}
+.remove-tile {
+  cursor: pointer;
+  position: absolute;
+  right: -2px;
+  top: 3px;
 }
 </style>

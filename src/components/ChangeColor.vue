@@ -7,12 +7,13 @@ defineEmits<{
 }>();
 defineProps<{
   currentColor: Color;
+  disabled: boolean;
 }>();
 const colors: Color[] = ["red", "yellow", "green", "black", "blue"];
 </script>
 
 <template>
-  <div class="ui button simple dropdown">
+  <div class="ui button simple dropdown" :class="{ disabled }">
     <img class="current" :src="standingMeepleSrc(currentColor)" />
     <div class="menu">
       <div>
