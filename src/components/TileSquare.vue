@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Tile } from "../types";
+import type { Color } from "../types";
 import { lyingMeepleSrc, standingMeepleSrc } from "@/assets/meeples";
 
 const tileSize = 60; // px
@@ -11,17 +12,26 @@ defineProps<{
   placeable: boolean;
   placing: boolean;
   focusing: boolean;
+  addingFrame: boolean;
 }>();
 defineEmits<{
   (e: "placeMeeple", idx: number): void;
   (e: "removeMeeple"): void;
   (e: "removeTile"): void;
   (e: "defocus"): void;
+  (e: "addFrame"): void;
 }>();
 
 const boxStyle = {
   height: `${tileSize}px`,
   width: `${tileSize}px`,
+};
+const tileStyle = (dir: number, frame: Color) => {
+  return {
+    transform: `rotate(${dir * 90}deg)`,
+    outline: frame !== null ? `1.8px solid ${frame}` : "none",
+    "outline-offset": frame !== null ? "-1.8px" : "none",
+  };
 };
 </script>
 
@@ -73,7 +83,14 @@ const boxStyle = {
   </div>
   <div class="box" :style="boxStyle" v-else-if="tile">
     <img
-      :style="{ transform: `rotate(${tile.Direction * 90}deg)` }"
+      v-if="addingFrame"
+      :style="tileStyle(tile.Direction, tile.Frame)"
+      :src="tile.Src"
+      @click="$emit('addFrame')"
+    />
+    <img
+      v-else
+      :style="tileStyle(tile.Direction, tile.Frame)"
       :src="tile.Src"
     />
     <div
@@ -118,8 +135,8 @@ img {
   opacity: 0.5;
 }
 .focusing > img {
-  outline: 2px solid black;
-  outline-offset: -2px;
+  outline: 1.8px solid black;
+  outline-offset: -1.8px;
 }
 .empty {
   border-radius: 50%;
