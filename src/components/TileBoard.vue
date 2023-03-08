@@ -4,6 +4,7 @@ import Panzoom from "@panzoom/panzoom";
 import type { Tile } from "../types";
 import { boardSize } from "@/assets/tiles";
 import TileSquare from "@/components/TileSquare.vue";
+import type { Color } from "@/types";
 
 defineProps<{
   placeablePositions: [number, number][];
@@ -11,6 +12,8 @@ defineProps<{
   placingTile: Tile | null;
   placingPosition?: [number, number];
   focusingPosition: [number, number];
+  selectedFrame: Color;
+  addingFrame: boolean;
 }>();
 defineEmits<{
   (e: "selectingPosition", pos: [number, number]): void;
@@ -20,6 +23,7 @@ defineEmits<{
   (e: "removeMeeple", pos: [number, number]): void;
   (e: "removeTile", pos: [number, number]): void;
   (e: "defocus"): void;
+  (e: "addFrame", pos: [number, number]): void;
 }>();
 const elem = ref<HTMLElement>();
 onMounted(() => {
@@ -48,9 +52,19 @@ onMounted(() => {
             :placeable="false"
             :placing="false"
             :focusing="true"
+            :addingFrame="false"
             @placeMeeple="(idx: number) => $emit('placeMeeple', idx, [y, x])"
             @removeMeeple="() => $emit('removeMeeple', [y, x])"
             @removeTile="() => $emit('removeTile', [y, x])"
+          />
+          <TileSquare
+            v-else-if="addingFrame"
+            :tile="tiles[y][x]"
+            :placeable="false"
+            :placing="false"
+            :focusing="false"
+            :addingFrame="true"
+            @addFrame="() => $emit('addFrame', [y, x])"
           />
           <TileSquare
             v-else
@@ -59,6 +73,7 @@ onMounted(() => {
             :placeable="false"
             :placing="false"
             :focusing="false"
+            :addingFrame="false"
           />
         </div>
         <div
@@ -74,6 +89,7 @@ onMounted(() => {
             :placeable="false"
             :placing="true"
             :focusing="false"
+            :addingFrame="false"
           />
         </div>
         <div
@@ -89,6 +105,7 @@ onMounted(() => {
             :placeable="true"
             :placing="false"
             :focusing="false"
+            :addingFrame="false"
           />
         </div>
         <div v-else>
@@ -97,6 +114,7 @@ onMounted(() => {
             :placeable="false"
             :placing="false"
             :focusing="false"
+            :addingFrame="false"
             @defocus="$emit('defocus')"
           />
         </div>

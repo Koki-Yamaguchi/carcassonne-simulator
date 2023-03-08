@@ -18,6 +18,7 @@ export class Tile {
   Sides: Side[];
   MeepledPosition: number = -1;
   MeepleColor: Color;
+  Frame: Color = null;
   Right(): Side {
     return this.Sides[(0 + this.Direction) % 4];
   }
@@ -44,6 +45,9 @@ export class Tile {
     this.MeepledPosition = -1;
     this.MeepleColor = null;
   }
+  AddFrame(color: Color) {
+    this.Frame = color;
+  }
   MeepleablePositions(): Position[] {
     return this.DefaultMeepleablePositions.map((pos, idx) => {
       const y = pos.y;
@@ -61,7 +65,8 @@ export class Tile {
     src: any,
     meepleColor: Color,
     defaultMeepleablePositions?: Position[],
-    meepledPostion?: number
+    meepledPostion?: number,
+    frame?: Color
   ) {
     this.Name = name;
     this.Direction = direction;
@@ -73,6 +78,9 @@ export class Tile {
     }
     if (meepledPostion) {
       this.MeepledPosition = meepledPostion;
+    }
+    if (frame) {
+      this.Frame = frame;
     }
   }
 }

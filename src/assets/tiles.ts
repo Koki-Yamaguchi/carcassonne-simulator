@@ -33,7 +33,7 @@ const allTileKinds: Tile[] = [
     null,
     [
       { idx: 1, y: 0, x: 0, isField: false },
-      { idx: 2, y: 0.5, x: 0.5, isField: true },
+      { idx: 2, y: 0.6, x: 0.6, isField: true },
     ]
   ),
   new Tile(
@@ -44,7 +44,7 @@ const allTileKinds: Tile[] = [
     null,
     [
       { idx: 1, y: 0, x: 0, isField: false },
-      { idx: 2, y: 0.5, x: 0.5, isField: true },
+      { idx: 2, y: 0.6, x: 0.6, isField: true },
       { idx: 3, y: -0.75, x: 0, isField: false },
     ]
   ),
@@ -172,8 +172,8 @@ const allTileKinds: Tile[] = [
       { idx: 3, y: -0.2, x: 0.6, isField: false },
       { idx: 4, y: -0.1, x: -0.6, isField: false },
       { idx: 5, y: -0.6, x: -0.1, isField: false },
-      { idx: 6, y: -0.7, x: 0.8, isField: true },
-      { idx: 7, y: -0.7, x: -0.8, isField: true },
+      { idx: 6, y: -0.6, x: 0.7, isField: true },
+      { idx: 7, y: -0.6, x: -0.7, isField: true },
     ]
   ),
   new Tile(

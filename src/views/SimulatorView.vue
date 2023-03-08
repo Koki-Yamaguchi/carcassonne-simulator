@@ -3,6 +3,7 @@ import TileBoard from "../components/TileBoard.vue";
 import PlaceNewTile from "../components/PlaceNewTile.vue";
 import NormalButton from "../components/NormalButton.vue";
 import ChangeColor from "../components/ChangeColor.vue";
+import SelectFrame from "../components/SelectFrame.vue";
 import { ref } from "vue";
 import type { Color, Tile } from "../types";
 import { initialBoard, newTile, boardSize, resetBoard } from "../assets/tiles";
@@ -14,6 +15,8 @@ const placeableDirections = ref<number[]>([]);
 const placingPosition = ref<[number, number]>([-1, -1]);
 const focusingPosition = ref<[number, number]>([-1, -1]);
 const currentColor = ref<Color>("red");
+const addingFrame = ref<boolean>(false);
+const selectedFrame = ref<Color>(null);
 
 const handleTileSelected = (tileKind: Tile) => {
   defocus();
@@ -113,6 +116,9 @@ const cancel = () => {
   placeablePositions.value = [];
   placeableDirections.value = [];
   placingPosition.value = [-1, -1];
+
+  addingFrame.value = false;
+  selectedFrame.value = null;
 };
 const reset = () => {
   if (!window.confirm("Do you reset the entire board?")) {
@@ -139,6 +145,15 @@ const removeTile = (pos: [number, number]) => {
 const handleChangeColor = (color: Color) => {
   currentColor.value = color;
 };
+const handleSelectFrame = (color: Color) => {
+  addingFrame.value = true;
+  selectedFrame.value = color;
+};
+const addFrame = (pos: [number, number]) => {
+  tiles.value[pos[0]][pos[1]]?.AddFrame(selectedFrame.value);
+  selectedFrame.value = null;
+  addingFrame.value = false;
+};
 const defocus = () => {
   focusingPosition.value = [-1, -1];
 };
@@ -150,24 +165,35 @@ const defocus = () => {
       <PlaceNewTile
         class="item"
         @placingTile="handleTileSelected"
-        :disabled="placingTile !== null"
+        :disabled="placingTile !== null || addingFrame"
       />
       <ChangeColor
         class="item"
         @changeColor="handleChangeColor"
         :currentColor="currentColor"
-        :disabled="placingTile !== null"
+        :disabled="placingTile !== null || addingFrame"
+      />
+      <SelectFrame
+        class="item"
+        @selectFrame="handleSelectFrame"
+        :disabled="
+          placingTile !== null || addingFrame || focusingPosition[0] !== -1
+        "
       />
       <NormalButton
         class="item"
         :onClick="confirm"
-        :disabled="placingTile === null || placeableDirections.length === 0"
+        :disabled="
+          placingTile === null ||
+          addingFrame ||
+          placeableDirections.length === 0
+        "
         :text="'Confirm'"
       />
       <NormalButton
         class="item"
         :onClick="cancel"
-        :disabled="placingTile === null"
+        :disabled="placingTile === null && !addingFrame"
         :text="'Cancel'"
       />
       <NormalButton
@@ -193,6 +219,9 @@ const defocus = () => {
         @removeMeeple="removeMeeple"
         @removeTile="removeTile"
         @defocus="defocus"
+        :selectedFrame="selectedFrame"
+        :addingFrame="addingFrame"
+        @addFrame="addFrame"
       />
     </div>
   </div>
