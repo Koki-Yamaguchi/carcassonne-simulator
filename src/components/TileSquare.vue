@@ -144,9 +144,10 @@ img {
 }
 .meeple {
   cursor: pointer;
+  z-index: 10;
 }
 img.meeple {
-  width: 15px;
+  width: 18px;
 }
 .remove-tile {
   cursor: pointer;
