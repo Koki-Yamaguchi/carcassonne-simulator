@@ -29,8 +29,8 @@ const boxStyle = {
 const tileStyle = (dir: number, frame: Color) => {
   return {
     transform: `rotate(${dir * 90}deg)`,
-    outline: frame !== null ? `1.8px solid ${frame}` : "none",
-    "outline-offset": frame !== null ? "-1.8px" : "none",
+    outline: frame !== null ? `2px solid ${frame}` : "none",
+    "outline-offset": frame !== null ? "-2px" : "none",
   };
 };
 </script>
@@ -135,8 +135,8 @@ img {
   opacity: 0.5;
 }
 .focusing > img {
-  outline: 1.8px solid black;
-  outline-offset: -1.8px;
+  outline: 2px solid black;
+  outline-offset: -2px;
 }
 .empty {
   border-radius: 50%;
