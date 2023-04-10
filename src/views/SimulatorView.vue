@@ -4,10 +4,10 @@ import PlaceNewTile from "../components/PlaceNewTile.vue";
 import NormalButton from "../components/NormalButton.vue";
 import ChangeColor from "../components/ChangeColor.vue";
 import SelectFrame from "../components/SelectFrame.vue";
-import { onMounted, ref, computed } from "vue";
+import { ref, computed } from "vue";
 import type { Color, Tile } from "../types";
 import { getBoard, newTile, boardSize, resetBoard } from "../assets/tiles";
-import { useRouter } from 'vue-router';
+import { useRouter } from "vue-router";
 import WoodImg from "../assets/img/background-wood.png";
 
 const router = useRouter();
@@ -185,13 +185,26 @@ const getBoardTheme = () => {
 };
 const boardStyle = computed(() => {
   const theme = getBoardTheme();
-  if (theme[0] === '#' || theme === 'black' || theme === 'white' || theme === 'blue' || theme === 'blue' || theme === 'red' || theme === 'pink' || theme === 'purple' || theme === 'green' || theme === 'yellow' || theme === 'brown' || theme === 'cyan') {
+  if (
+    theme[0] === "#" ||
+    theme === "black" ||
+    theme === "white" ||
+    theme === "blue" ||
+    theme === "blue" ||
+    theme === "red" ||
+    theme === "pink" ||
+    theme === "purple" ||
+    theme === "green" ||
+    theme === "yellow" ||
+    theme === "brown" ||
+    theme === "cyan"
+  ) {
     return {
-      'background-color': theme,
+      "background-color": theme,
     };
   } else {
     return {
-      'background-image': 'url(' + WoodImg + ')',
+      "background-image": "url(" + WoodImg + ")",
     };
   }
 });
@@ -243,7 +256,7 @@ const boardStyle = computed(() => {
       />
       <button
         class="ui icon button item"
-        @click="router.push('/simulator/settings');"
+        @click="router.push('/simulator/settings')"
       >
         <i class="cog icon"></i>
       </button>

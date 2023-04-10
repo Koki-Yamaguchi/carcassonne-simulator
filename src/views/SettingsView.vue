@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import ViewWrapper from "../components/ViewWrapper.vue";
 import { ref, onMounted } from "vue";
-import { useRouter } from 'vue-router';
+import { useRouter } from "vue-router";
 
 const router = useRouter();
 const boardTheme = ref("wood");
-const useCustomBoardTheme = () => { return boardTheme.value === "custom" };
+const useCustomBoardTheme = () => {
+  return boardTheme.value === "custom";
+};
 const customBoardTheme = ref("");
 
 onMounted(() => {
@@ -23,14 +25,13 @@ const loadSettingsFromCache = () => {
       }
     }
   }
-}
+};
 
 const saveSettingsInCache = () => {
   localStorage.setItem("boardTheme", boardTheme.value);
   localStorage.setItem("customBoardTheme", customBoardTheme.value);
   alert("Saved!");
 };
-
 </script>
 
 <template>
@@ -64,25 +65,16 @@ const saveSettingsInCache = () => {
               <label>Custom Color</label>
             </div>
           </div>
-          <div
-            v-if="useCustomBoardTheme()"
-            class="field"
-          >
-            <input v-model="customBoardTheme" type="text"             placeholder="Color Code (e.g. #ffff00)" />
+          <div v-if="useCustomBoardTheme()" class="field">
+            <input
+              v-model="customBoardTheme"
+              type="text"
+              placeholder="Color Code (e.g. #ffff00)"
+            />
           </div>
         </div>
-        <div
-          class="ui button"
-          @click="saveSettingsInCache()"
-        >
-          Save
-        </div>
-        <div
-          class="ui button"
-          @click="router.push('/simulator')"
-        >
-          Back
-        </div>
+        <div class="ui button" @click="saveSettingsInCache()">Save</div>
+        <div class="ui button" @click="router.push('/simulator')">Back</div>
       </div>
     </div>
   </ViewWrapper>
