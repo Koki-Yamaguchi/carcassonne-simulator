@@ -4,10 +4,13 @@ import PlaceNewTile from "../components/PlaceNewTile.vue";
 import NormalButton from "../components/NormalButton.vue";
 import ChangeColor from "../components/ChangeColor.vue";
 import SelectFrame from "../components/SelectFrame.vue";
-import { ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 import type { Color, Tile } from "../types";
 import { getBoard, newTile, boardSize, resetBoard } from "../assets/tiles";
+import { useRouter } from 'vue-router';
+import WoodImg from "../assets/img/background-wood.png";
 
+const router = useRouter();
 const tiles = ref<(Tile | null)[][]>(getBoard());
 const placingTile = ref<Tile | null>(null);
 const placeablePositions = ref<[number, number][]>([]);
@@ -166,6 +169,32 @@ const defocus = () => {
 const saveBoardInCache = () => {
   localStorage.setItem("board", JSON.stringify(tiles.value));
 };
+const getBoardTheme = () => {
+  let boardTheme = "wood";
+  const brdtheme = localStorage.getItem("boardTheme");
+  if (brdtheme) {
+    boardTheme = brdtheme;
+    if (brdtheme === "custom") {
+      const cbrdtheme = localStorage.getItem("customBoardTheme");
+      if (cbrdtheme) {
+        boardTheme = cbrdtheme;
+      }
+    }
+  }
+  return boardTheme;
+};
+const boardStyle = computed(() => {
+  const theme = getBoardTheme();
+  if (theme[0] === '#' || theme === 'black' || theme === 'white' || theme === 'blue' || theme === 'blue' || theme === 'red' || theme === 'pink' || theme === 'purple' || theme === 'green' || theme === 'yellow' || theme === 'brown' || theme === 'cyan') {
+    return {
+      'background-color': theme,
+    };
+  } else {
+    return {
+      'background-image': 'url(' + WoodImg + ')',
+    };
+  }
+});
 </script>
 
 <template>
@@ -212,8 +241,14 @@ const saveBoardInCache = () => {
         :style="{ color: '#DC143C' }"
         :text="'Reset'"
       />
+      <button
+        class="ui icon button item"
+        @click="router.push('/simulator/settings');"
+      >
+        <i class="cog icon"></i>
+      </button>
     </div>
-    <div class="board">
+    <div class="board" :style="boardStyle">
       <TileBoard
         :placeablePositions="placeablePositions"
         :tiles="tiles"
@@ -270,7 +305,6 @@ const saveBoardInCache = () => {
 }
 .board {
   height: 1000px;
-  background-color: #feeeec;
   border-radius: 0.5%;
 }
 </style>
