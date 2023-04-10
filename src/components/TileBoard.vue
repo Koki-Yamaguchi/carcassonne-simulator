@@ -41,7 +41,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="elem" class="board">
+  <div ref="elem" class="tile-board">
     <div class="row" v-for="y in boardSize - 1" :key="y">
       <!-- 1 based index -->
       <div v-for="x in boardSize - 1" :key="x">

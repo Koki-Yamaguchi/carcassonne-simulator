@@ -8,8 +8,4 @@ import { RouterView } from "vue-router";
   </div>
 </template>
 
-<style scoped>
-.main {
-  background-color: #edcdb7;
-}
-</style>
+<style scoped></style>

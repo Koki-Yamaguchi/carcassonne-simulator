@@ -4,11 +4,14 @@ import PlaceNewTile from "../components/PlaceNewTile.vue";
 import NormalButton from "../components/NormalButton.vue";
 import ChangeColor from "../components/ChangeColor.vue";
 import SelectFrame from "../components/SelectFrame.vue";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import type { Color, Tile } from "../types";
-import { initialBoard, newTile, boardSize, resetBoard } from "../assets/tiles";
+import { getBoard, newTile, boardSize, resetBoard } from "../assets/tiles";
+import { useRouter } from "vue-router";
+import WoodImg from "../assets/img/background-wood.png";
 
-const tiles = ref<(Tile | null)[][]>(initialBoard);
+const router = useRouter();
+const tiles = ref<(Tile | null)[][]>(getBoard());
 const placingTile = ref<Tile | null>(null);
 const placeablePositions = ref<[number, number][]>([]);
 const placeableDirections = ref<number[]>([]);
@@ -110,6 +113,7 @@ const confirm = () => {
   placeablePositions.value = [];
   placeableDirections.value = [];
   placingPosition.value = [-1, -1];
+  saveBoardInCache();
 };
 const cancel = () => {
   placingTile.value = null;
@@ -129,18 +133,22 @@ const reset = () => {
   placeablePositions.value = [];
   placeableDirections.value = [];
   placingPosition.value = [-1, -1];
+  saveBoardInCache();
 };
 const handleEditTile = (pos: [number, number]) => {
   focusingPosition.value = pos;
 };
 const placeMeeple = (meeplePosIdx: number, pos: [number, number]) => {
   tiles.value[pos[0]][pos[1]]?.PlaceMeeple(meeplePosIdx, currentColor.value);
+  saveBoardInCache();
 };
 const removeMeeple = (pos: [number, number]) => {
   tiles.value[pos[0]][pos[1]]?.RemoveMeeple();
+  saveBoardInCache();
 };
 const removeTile = (pos: [number, number]) => {
   tiles.value[pos[0]][pos[1]] = null;
+  saveBoardInCache();
 };
 const handleChangeColor = (color: Color) => {
   currentColor.value = color;
@@ -153,10 +161,53 @@ const addFrame = (pos: [number, number]) => {
   tiles.value[pos[0]][pos[1]]?.AddFrame(selectedFrame.value);
   selectedFrame.value = null;
   addingFrame.value = false;
+  saveBoardInCache();
 };
 const defocus = () => {
   focusingPosition.value = [-1, -1];
 };
+const saveBoardInCache = () => {
+  localStorage.setItem("board", JSON.stringify(tiles.value));
+};
+const getBoardTheme = () => {
+  let boardTheme = "wood";
+  const brdtheme = localStorage.getItem("boardTheme");
+  if (brdtheme) {
+    boardTheme = brdtheme;
+    if (brdtheme === "custom") {
+      const cbrdtheme = localStorage.getItem("customBoardTheme");
+      if (cbrdtheme) {
+        boardTheme = cbrdtheme;
+      }
+    }
+  }
+  return boardTheme;
+};
+const boardStyle = computed(() => {
+  const theme = getBoardTheme();
+  if (
+    theme[0] === "#" ||
+    theme === "black" ||
+    theme === "white" ||
+    theme === "blue" ||
+    theme === "blue" ||
+    theme === "red" ||
+    theme === "pink" ||
+    theme === "purple" ||
+    theme === "green" ||
+    theme === "yellow" ||
+    theme === "brown" ||
+    theme === "cyan"
+  ) {
+    return {
+      "background-color": theme,
+    };
+  } else {
+    return {
+      "background-image": "url(" + WoodImg + ")",
+    };
+  }
+});
 </script>
 
 <template>
@@ -203,8 +254,14 @@ const defocus = () => {
         :style="{ color: '#DC143C' }"
         :text="'Reset'"
       />
+      <button
+        class="ui icon button item"
+        @click="router.push('/simulator/settings')"
+      >
+        <i class="cog icon"></i>
+      </button>
     </div>
-    <div class="board">
+    <div class="board" :style="boardStyle">
       <TileBoard
         :placeablePositions="placeablePositions"
         :tiles="tiles"
@@ -261,7 +318,6 @@ const defocus = () => {
 }
 .board {
   height: 1000px;
-  background-color: #feeeec;
   border-radius: 0.5%;
 }
 </style>
