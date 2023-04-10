@@ -289,7 +289,9 @@ function newTile(tileKind: Tile): Tile {
     tileKind.Sides,
     tileKind.Src,
     tileKind.MeepleColor,
-    tileKind.DefaultMeepleablePositions
+    tileKind.DefaultMeepleablePositions,
+    tileKind.MeepledPosition,
+    tileKind.Frame
   );
 }
 
@@ -323,4 +325,22 @@ function resetBoard(board: (Tile | null)[][]) {
   );
 }
 
-export { allTileKinds, initialBoard, boardSize, newTile, resetBoard };
+function getBoard(): (Tile | null)[][] {
+  const boardStr = localStorage.getItem("board");
+  if (boardStr) {
+    const boardWithoutMethods: (Tile | null)[][] = JSON.parse(boardStr);
+    const board: (Tile | null)[][] = initialBoard;
+    for (let y = 0; y < boardSize; y++) {
+      for (let x = 0; x < boardSize; x++) {
+        if (boardWithoutMethods[y][x]) {
+          board[y][x] = newTile(boardWithoutMethods[y][x]!);
+        }
+      }
+    }
+
+    return board;
+  }
+  return initialBoard;
+}
+
+export { allTileKinds, boardSize, newTile, resetBoard, getBoard };

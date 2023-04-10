@@ -6,9 +6,9 @@ import ChangeColor from "../components/ChangeColor.vue";
 import SelectFrame from "../components/SelectFrame.vue";
 import { ref } from "vue";
 import type { Color, Tile } from "../types";
-import { initialBoard, newTile, boardSize, resetBoard } from "../assets/tiles";
+import { getBoard, newTile, boardSize, resetBoard } from "../assets/tiles";
 
-const tiles = ref<(Tile | null)[][]>(initialBoard);
+const tiles = ref<(Tile | null)[][]>(getBoard());
 const placingTile = ref<Tile | null>(null);
 const placeablePositions = ref<[number, number][]>([]);
 const placeableDirections = ref<number[]>([]);
@@ -110,6 +110,7 @@ const confirm = () => {
   placeablePositions.value = [];
   placeableDirections.value = [];
   placingPosition.value = [-1, -1];
+  saveBoardInCache();
 };
 const cancel = () => {
   placingTile.value = null;
@@ -129,18 +130,22 @@ const reset = () => {
   placeablePositions.value = [];
   placeableDirections.value = [];
   placingPosition.value = [-1, -1];
+  saveBoardInCache();
 };
 const handleEditTile = (pos: [number, number]) => {
   focusingPosition.value = pos;
 };
 const placeMeeple = (meeplePosIdx: number, pos: [number, number]) => {
   tiles.value[pos[0]][pos[1]]?.PlaceMeeple(meeplePosIdx, currentColor.value);
+  saveBoardInCache();
 };
 const removeMeeple = (pos: [number, number]) => {
   tiles.value[pos[0]][pos[1]]?.RemoveMeeple();
+  saveBoardInCache();
 };
 const removeTile = (pos: [number, number]) => {
   tiles.value[pos[0]][pos[1]] = null;
+  saveBoardInCache();
 };
 const handleChangeColor = (color: Color) => {
   currentColor.value = color;
@@ -153,9 +158,13 @@ const addFrame = (pos: [number, number]) => {
   tiles.value[pos[0]][pos[1]]?.AddFrame(selectedFrame.value);
   selectedFrame.value = null;
   addingFrame.value = false;
+  saveBoardInCache();
 };
 const defocus = () => {
   focusingPosition.value = [-1, -1];
+};
+const saveBoardInCache = () => {
+  localStorage.setItem("board", JSON.stringify(tiles.value));
 };
 </script>
 
