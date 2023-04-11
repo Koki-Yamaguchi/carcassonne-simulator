@@ -4,8 +4,8 @@ import type { Color } from "../types";
 import { lyingMeepleSrc, standingMeepleSrc } from "@/assets/meeples";
 
 const tileSize = 60; // px
-const spotRadius = 2; // px
-const spotColor = "#FFDAB9";
+const spotRadius = 4; // px
+const spotColor = "#ffffff";
 
 defineProps<{
   tile: Tile | null;
@@ -77,6 +77,7 @@ const tileStyle = (dir: number, frame: Color) => {
           left: `${tileSize / 2 + (pos.x * tileSize) / 2 - spotRadius}px`,
           top: `${tileSize / 2 - (pos.y * tileSize) / 2 - spotRadius}px`,
           border: `${spotRadius}px solid ${spotColor}`,
+          opacity: 0.7,
         }"
       ></div>
     </div>
