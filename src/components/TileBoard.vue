@@ -30,8 +30,8 @@ onMounted(() => {
   if (elem.value) {
     const panzoom = Panzoom(elem.value, {
       maxScale: 20,
-      startX: -60 * 14,
-      startY: -60 * 14,
+      startX: -60 * 18,
+      startY: -60 * 18,
     });
     if (elem.value.parentElement) {
       elem.value.parentElement.addEventListener("wheel", panzoom.zoomWithWheel);

@@ -295,7 +295,7 @@ function newTile(tileKind: Tile): Tile {
   );
 }
 
-const boardSize = 2 * 16 + 1;
+const boardSize = 2 * 20 + 1;
 const initialBoard: (Tile | null)[][] = [];
 for (let i = 0; i < boardSize; i++) {
   const emptyRow: (Tile | null)[] = [];
@@ -330,8 +330,11 @@ function getBoard(): (Tile | null)[][] {
   if (boardStr) {
     const boardWithoutMethods: (Tile | null)[][] = JSON.parse(boardStr);
     const board: (Tile | null)[][] = initialBoard;
-    for (let y = 0; y < boardSize; y++) {
-      for (let x = 0; x < boardSize; x++) {
+    board[(boardSize - 1) / 2][(boardSize - 1) / 2] = null;
+    const ysz = Math.min(boardWithoutMethods.length, board.length);
+    const xsz = Math.min(boardWithoutMethods[0].length, board[0].length);
+    for (let y = 0; y < ysz; y++) {
+      for (let x = 0; x < xsz; x++) {
         if (boardWithoutMethods[y][x]) {
           board[y][x] = newTile(boardWithoutMethods[y][x]!);
         }
